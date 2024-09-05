@@ -1,0 +1,79 @@
+{% extends 'news/default.html' %}
+{% load custom_filters %}
+{% block title %}
+News
+{% endblock title %}
+<hr>
+{% block content %}
+<h3>{{ time_now|date:'d M Y' }}</h3>
+{% if perms.news.add_post %}
+<a class="btn btn-primary my-btn mb-3" href="{% url 'news_create'  %}">Воин, расскажи новое миру!</a>
+{% endif %}
+<hr>
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input class="btn btn-primary my-btn mb-3" type="submit" value="Найти" />
+   </form>
+
+<h2> Количество постов {{ news|length}}</h2>
+<hr>
+{% if news %}
+<table style="margin-left: auto; margin-right: auto;">
+
+  {% for new in news %}
+    <tbody>
+
+  <tr>
+      <td style="width: 200px;">
+      <td style="width: 600px;"><u>{{ new.title|censor }}</u> <u>{{ new.dateCreation|date:'d M Y' }}</u> <u>{{ new.categoryType|censor }}</u>
+
+  </td>
+  </tr>
+      <tr>
+      <td style="width: 200px;"><u>{% if new.files %}
+                                    <img src="{{ new.files.url }}"
+                                    width="200"
+                                    height="200"/>
+                                    </u>
+                                    {% else %}
+                                    <img src="../media/uploads/img.png"
+                                    width="200"
+                                    height="200"/></td>
+                                    {% endif %}
+      <td style="width: 600px;"><u>{{ new.text|censor|truncatechars:300}}</u>
+          <a class="btn btn-primary my-btn mb-3" href="{% url 'post_detail' new.id %}">Читать</a></td>
+      {% endfor %}
+  </tr>
+
+</tbody>
+
+</table>
+<hr>
+{% else %}
+<h3>Публикаций нет!</h3>
+{% endif %}
+   {# Добавляем пагинацию на страницу #}
+
+   {# Информация о предыдущих страницах #}
+
+   {% if page_obj.has_previous %}
+       <a href="?page=1">1</a>
+       {% if page_obj.previous_page_number != 1 %}
+           ...
+           <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+       {% endif %}
+   {% endif %}
+
+   {{ page_obj.number }}
+
+   {% if page_obj.has_next %}
+       <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+       {% if paginator.num_pages != page_obj.next_page_number %}
+           ...
+           <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+       {% endif %}
+   {% endif %}
+
+{% endblock content %}

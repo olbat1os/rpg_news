@@ -1,0 +1,23 @@
+
+{% extends 'default.html' %}
+{% load custom_filters %}
+{% block title %}
+Комментарии
+{% endblock title %}
+
+{% block content %}
+     <hr>
+    {% for com in CommentList %}
+            {% if com.status == True %}
+        <h1>{{ com.text }}</h1><br>
+        <h5>{{ com.author }}</h5><br>
+            {{ com.dateComm }}<br>
+    {% endif %}
+    <hr>
+    {% endfor %}
+<td>
+           <a class="btn btn-primary my-btn mb-3" href="{{request.META.HTTP_REFERER}}">Назад</a>
+
+</td>
+
+{% endblock content %}

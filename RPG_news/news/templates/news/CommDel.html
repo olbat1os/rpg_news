@@ -1,0 +1,15 @@
+{% extends 'default.html' %}
+
+{% block title %}
+Удалить комментарий?
+{% endblock title %}
+
+{% block content %}
+<h1>Удаление поста</h1>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    <p>От автора "{{object.author.username}}" удаляем "{{ CommDel.text }}"?</p>
+    <input class="btn btn-primary my-btn mb-3" type="submit" value="Удалить" />
+</form>
+{% endblock content %}

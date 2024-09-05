@@ -1,0 +1,30 @@
+{% extends 'default.html' %}
+
+{% block title %}
+Комментарий
+{% endblock title %}
+
+{% block content %}
+<hr>
+<ul>
+  <div align="left">
+    <p>
+    <a class="btn btn-primary my-btn mb-3" href="{{request.META.HTTP_REFERER}}">Назад</a>
+    </p>
+  </div>
+</ul>
+
+<form action="" method="get">
+    {{ filterset.form.as_p }}
+    <input class="btn btn-primary my-btn mb-3" type="submit" value="Смотреть">
+    <h2 style="text-align: center;"><strong>Комментарии к моим постам:</strong></h2>
+</form>
+     <hr>
+    {% for com in MyCommentList %}
+        <h1><a href="{% url 'onecomm' com.id %}">{{ com.text }}</a><br></h1>
+        <h5>{{ com.author }}<br></h5>
+            {{ com.dateComm }}<br>
+            {{ com.status }}<br>
+    <hr>
+    {% endfor %}
+{% endblock content %}

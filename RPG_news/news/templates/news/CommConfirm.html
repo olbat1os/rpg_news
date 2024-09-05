@@ -1,0 +1,17 @@
+{% extends 'default.html' %}
+
+{% block title %}
+Подтверждение комментария
+{% endblock title %}
+
+{% block content %}
+<h1>Принять отклик</h1>
+<h4>{{object.text}} от {{object.author.username}}</h4>
+<h5>{{object.dateComm}}</h5>
+<hr>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-primary my-btn mb-3" type="submit" value="Accept" />
+</form>
+{% endblock content %}

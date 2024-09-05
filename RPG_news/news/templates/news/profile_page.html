@@ -1,0 +1,64 @@
+{% extends 'news/default.html' %}
+{% block title %}{{ title }}{% endblock %}
+{% load custom_filters %}
+{% block content %}
+<ul>
+  <div align="left">
+    <h1 style="text-align: center;"><strong>Меню</strong></h1>
+    <p>
+    <a  class="btn btn-primary my-btn mb-3" href="{% url 'comm' %}">Комментарии к моим постам</a>
+    </p>
+</div>
+</ul>
+<hr>
+    <div class="content-section">
+      <div class="media">
+        <div class="media-body">
+          <h2 class="account-heading">Пользователь: {{ username }}</h2>
+            {% if post_owner.email %}
+          <p class="text-secondary">E-Mail: {{ post_owner.email }}</p>
+            {% endif %}
+        </div>
+
+        {% for Post in user_posts %}
+
+         <table style="margin-left: auto; margin-right: auto;">
+         <tbody>
+
+            <tr>
+                <td style="width: 200px;">
+                <td style="width: 600px;"><u>{{ Post.title|censor }}</u> <u>{{ Post.dateCreation|date:'d M Y' }}</u>
+                <u>{{ Post.categoryType|censor }}</u>
+            </td>
+            </tr>
+                <tr>
+                <td style="width: 200px;"><u>{% if Post.files %}
+                                              <img src="{{ Post.files.url }}"
+                                              width="200"
+                                              height="200"/>
+                                              </u>
+                                              {% else %}
+                                              <img src="../media/uploads/img.png"
+                                              width="200"
+                                              height="200"/></td>
+                                              {% endif %}
+                <td style="width: 600px;"><u>{{ Post.text|censor|truncatechars:300}}</u>
+                    <a class="btn btn-primary my-btn mb-3" href="{% url 'post_detail' Post.id %}">Читать</a></td>
+                {% if perms.news.change_post %}
+                    <td></td>
+                    <td></td>
+                    <td><a class="btn btn-primary my-btn mb-3" href="{% url 'news_update' Post.id %}">Обновить</a>
+                        <a class="btn btn-primary my-btn mb-3" href="{% url 'news_delete' Post.id %}">Удалить</a></td>
+                {% endif %}
+         {% endfor %}
+  </tr>
+
+</tbody>
+
+</table>
+
+
+</div>
+</div>
+
+{% endblock content %}

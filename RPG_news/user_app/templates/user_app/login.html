@@ -1,0 +1,27 @@
+{% extends 'flatpages/default.html' %}
+
+{% block content %}
+  <div class="form-section containrt mt-3 justify-content-center d-flex">
+    <div class="col-lh-4 col-sm-12">
+      <h2>Авторизация на сайте</h2>
+      <form method="post">
+          {% csrf_token %}
+          {% if form.non_field_errors %}
+              <div class="alert alert-danger">
+                  {{ form.non_field_errors }}
+              </div>
+          {% endif %}
+          {% for field in form %}
+              <p class="form-label">{{ field.label }}</p>
+              <p>{{ field }}</p>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary my-btn me-3">Войти</button>
+          <h5> Или войдите через:
+
+    #<a title="Yandex" href="/user/yandex/login/?process=login">Yandex</a></h5>
+
+      </form>
+         У вас еще нет аккаунта? Тогда, пожалуйста <a href="{% url 'user_app:signup' %}">зарегистрируйтесь</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}
+    Регистрация
+{% endblock title %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+    {% for field in form %}
+        <p class="form-label">{{ field.label }}</p>
+        <p>{{ field }}</p>
+        {% if field.errors %}
+            <ul class="alert alert-danger">
+                {{ field.errors }}
+            </ul>
+        {% endif %}
+    {% endfor %}
+    <button type="submit" class="btn btn-primary my-btn me-3">Зарегистрироваться</button>
+      <p>
+        У вас уже есть аккаунт? Тогда, пожалуйста <a href="/user/login/">войдите</a>.
+    </p>
+</form>
+
+{% endblock content %}

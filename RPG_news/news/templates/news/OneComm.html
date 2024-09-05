@@ -1,0 +1,22 @@
+{% extends 'default.html' %}
+
+
+{% block title %}
+{{ OneComm.message }}
+{% endblock title %}
+
+
+{% block content %}
+<hr>
+<p>{{ OneComm.text }}</p>
+<p>{{ OneComm.author.username }}</p>
+<p>{{ OneComm.dateComm }}</p>
+<hr>
+<td> {% if  OneComm.status != True %}
+                    <a class="btn btn-primary my-btn mb-3" href="{% url 'confirm' pk=OneComm.id %}">Принять</a>
+                   {% else %}
+                   <p>Комметарий принят</p>
+                   {% endif %}
+    <a class="btn btn-primary my-btn mb-3" href="{% url 'delcomm' pk=OneComm.id %}">Удалить комментарий</a></td>
+
+{% endblock content %}

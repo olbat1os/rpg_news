@@ -1,0 +1,14 @@
+{% extends 'flatpages/default.html' %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <div class="container mt-3 justify-content-center d-flex">
+        <div class="col-lg-4 col-sm-12">
+            <h2>Учётная запись активирована.</h2>
+            <p>Ваша электронная почта была подтверждена успешно.</p>
+            <a href="{% url 'user_app:login' %}" class="btn btn-primary my-btn mb-3">
+                Продолжить
+            </a>
+        </div>
+    </div>
+{% endblock %}
